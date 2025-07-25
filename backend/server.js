@@ -32,7 +32,7 @@ app.use(
   cors({
     origin:
       process.env.NODE_ENV === "production"
-        ? ["https://your-frontend-domain.vercel.app"]
+        ? ["https://book-review-project-1.onrender.com"]
         : ["http://localhost:5173", "http://127.0.0.1:5173"],
     credentials: true,
   })
