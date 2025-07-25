@@ -30,13 +30,24 @@ app.use(limiter);
 // CORS configuration
 app.use(
   cors({
-    origin:
-      process.env.NODE_ENV === "production"
-        ? ["https://book-review-project-1.onrender.com"]
-        : ["http://localhost:5173", "http://127.0.0.1:5173"],
+    origin: function (origin, callback) {
+      const allowedOrigins = [
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "https://book-review-project-1.onrender.com", // frontend live
+      ];
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+
 
 // Body parser middleware
 app.use(express.json({ limit: "10mb" }));
